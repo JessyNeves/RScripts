@@ -16,7 +16,7 @@ con <- 'Driver={SQL Server};Server=edpsighprddb1.cpdprd.pt;Database=SIGH-AC-PRD;
 channel <- odbcDriverConnect(con)
 
 result <- sqlQuery(channel, "SELECT UserID, DataLog, HoraLog, Trans FROM edp.sal_MLP
-WHERE UserID = 'EX83970' AND DataLog >= '2019' AND TpReg IN('AUW', 'AUY', 'AU3') AND Trans IN('CAA2', 'FPP', 'EA62', 'VA01', 'FP04', 'FPE2M', 'SE16', 'ZLF_AJUSTA_B2C', 'ZPB_CALC_MANUAL', 'ZPF_VAL_CRED_SDD', 'ZPO_GEST_TB', 'ZPX_CONSULTA_SE16')
+WHERE UserID = 'EX82461' AND DataLog >= '20190301' AND TpReg IN('AUW', 'AUY', 'AU3') AND Trans NOT IN('SESSION_MANAGER', '')
 ORDER BY UserID, DataLog, HoraLog")
 
 # unixTime represents second 0, origin of time.
