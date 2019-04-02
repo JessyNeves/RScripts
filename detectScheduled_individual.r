@@ -12,10 +12,10 @@ library(spatialEco)
 library(bupaR)
 library(stringr)
 # Connection to DB
-con <- 'Driver={SQL Server};Server=edpsighprddb1.cpdprd.pt;Database=SIGH-AC-PRD;Trusted_Connection=yes'
+con <- ''
 channel <- odbcDriverConnect(con)
 
-result <- sqlQuery(channel, "SELECT UserID, DataLog, HoraLog, Trans FROM edp.sal_MLP
+result <- sqlQuery(channel, "SELECT UserID, DataLog, HoraLog, Trans FROM *
 WHERE UserID = 'EX82461' AND DataLog >= '20190301' AND TpReg IN('AUW', 'AUY', 'AU3') AND Trans NOT IN('SESSION_MANAGER', '')
 ORDER BY UserID, DataLog, HoraLog")
 
