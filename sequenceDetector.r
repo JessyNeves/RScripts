@@ -26,10 +26,10 @@ library(DescTools)
 #EX82995 _ P05
 
 # Connection to DB
-con <- 'Driver={SQL Server};Server=edpsighprddb1.cpdprd.pt;Database=SIGH-AC-PRD;Trusted_Connection=yes'
+con <- '...'
 channel <- odbcDriverConnect(con)
 #Querying DB
-result <- sqlQuery(channel, "SELECT UserID, DataLog, HoraLog, Trans FROM edp.sal_P16
+result <- sqlQuery(channel, "SELECT UserID, DataLog, HoraLog, Trans FROM *
 WHERE DataLog >= '20190320' AND TpReg IN('AUW', 'AUY', 'AU3') AND Trans NOT IN('') AND UserID LIKE 'E%'
 ORDER BY UserID, DataLog, HoraLog")
 close(channel)
