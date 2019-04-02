@@ -1,4 +1,4 @@
-# LINHAS DE INSTALA«√O
+# LINHAS DE INSTALA√á√ÉO
 
 #install.packages("RODBC")
 #install.packages("lubridate")
@@ -29,7 +29,7 @@
 
 
     # Connection to DB
-    con <- 'Driver={SQL Server};Server=edpsighprddb1.cpdprd.pt;Database=SIGH-AC-PRD;Trusted_Connection=yes'
+    con <- ''
     channel <- odbcDriverConnect(con)
     # Menu ; Which system? When? All Transactions? 
     one <- "p05"
@@ -40,23 +40,23 @@
     todas <- "Trans NOT IN('SESSION_MANAGER', '')"
     criticas <- "Trans IN('ZPX_CONSULTA_SE16','ZPO_GEST_TB', 'ZPF_VAL_CRED_SDD', 'ZLF_AJUSTA_B2C', 'SE16', 'FPE2M', 'FP40', 'FP04', 'VA01','EA62', 'FPP2', 'CAA2')"
     custom <- "TOBEREPLACED"
-    print("Insira o n˙mero correspondente ao sistema a analisar: 1, 2, 3, 4 ou 5")
+    print("Insira o n√∫mero correspondente ao sistema a analisar: 1, 2, 3, 4 ou 5")
     # Menu Options + Stored Result 
     system <- switch(menu(c("P05", "P15", "P16", "P25", "MLP")) + 1, cat("Nothing done\n"), one, two, three, four, five)
-    print("SeleÁ„o/InserÁ„o das TransaÁıes:")
-    transactions <- switch(menu(c("Todas as transaÁıes", "Apenas transaÁıes crÌticas", "Inserir Manualmente")) + 1, cat("Nothing done\n"), todas, criticas, custom)
+    print("Sele√ß√£o/Inser√ß√£o das Transa√ß√µes:")
+    transactions <- switch(menu(c("Todas as transa√ß√µes", "Apenas transa√ß√µes cr√≠ticas", "Inserir Manualmente")) + 1, cat("Nothing done\n"), todas, criticas, custom)
     if (transactions == custom) {
-        custom <- readline(prompt = "Insira as transaÁıes desejadas separadas por vÌrgula e entre plicas. Ex: 'ZPX', 'SE99', 'FP14'")
+        custom <- readline(prompt = "Insira as transa√ß√µes desejadas separadas por v√≠rgula e entre plicas. Ex: 'ZPX', 'SE99', 'FP14'")
         custom <- paste("TRANS IN(", custom, sep = "")
         custom <- paste(custom, ")", sep = "")
     }
     # Reads Date
-    bigBang <- readline(prompt = "Insira a data de inicio. Formato: 20191001 (2019/10/01 - Ano / MÍs / Dia ): ")
+    bigBang <- readline(prompt = "Insira a data de inicio. Formato: 20191001 (2019/10/01 - Ano / M√™s / Dia ): ")
     # Reads Date
-    bigCrunch <- readline(prompt = "Insira a data de fim. Formato: 20191001 (2019/10/01 - Ano / MÍs / Dia ): ")
+    bigCrunch <- readline(prompt = "Insira a data de fim. Formato: 20191001 (2019/10/01 - Ano / M√™s / Dia ): ")
     # Unfinished Query. Lacks system ; First Day Date ; Last Day Date
     query <- "SELECT timestamp=Datediff ( second, '2018-12-01 00:00:00',SUBSTRING(DataLog, 1, 4) + '-' + SUBSTRING(DataLog, 5, 2) + '-' + SUBSTRING(DataLog, 7,2) + ' ' + SUBSTRING(HoraLog, 1, 2) + ':' + SUBSTRING(HoraLog, 3, 2) + ':' + SUBSTRING(HoraLog, 5,2)),
-    UserID, DataLog, HoraLog FROM edp.sal_INSERT_SYSTEM_HERE
+    UserID, DataLog, HoraLog FROM *
     WHERE UserID LIKE 'E%' AND UserID NOT LIKE 'ESA%' AND DataLog >= 'INSERT_FIRST_DAY_HERE' AND DataLog <= 'INSERT_LAST_DAY_HERE' AND WHICH_TRANSACTIONS
     ORDER BY UserID, DataLog, HoraLog"
 
@@ -71,12 +71,12 @@
     # Verify Dates (If end > beginning. If interval isn't too big)
 
     if (!(bigCrunch >= bigBang))
-        stop("Data Inicial È posterior ‡ Data Final.")
+        stop("Data Inicial √© posterior √† Data Final.")
 
     # Verify Dates (if interval isn't too big)
     if (abs(as.numeric(bigBang) - as.numeric(bigCrunch)) > 230) {
         print("AVISO: O intervalo introduzido pode ser demasiado grande. Prosseguir?")
-        system <- switch(menu(c("Sim", "N„o")) + 1,
+        system <- switch(menu(c("Sim", "N√£o")) + 1,
        cat("Nothing done\n"), "Sim", stop("Parado por ordem do utilizador"))
     }
 
@@ -87,7 +87,7 @@
     result <- sqlQuery(channel, query)
     if (grepl('ERROR', result[[2]]))
         stop("Couldn't Query DB. Possibly can't interpret Query")
-    print("Querying Over. PrÈ-Processamento da informaÁ„o...")
+    print("Querying Over. Pr√©-Processamento da informa√ß√£o...")
 
     data <- result$DataLog
     hora <- result$HoraLog                    
@@ -131,7 +131,7 @@
     weekdays <- insert.values(weekdays, "INVALIDO", 1)
     thetime <- as.POSIXct(thetime)
     dataset <- data.frame(user, thetime, trans, data, weekdays)
-    dataset <- dataset[dataset$weekdays != "sﬂb",]
+    dataset <- dataset[dataset$weekdays != "s√üb",]
     dataset <- dataset[dataset$weekdays != "dom",]
 
     #Detect Scheduled Alarm 
